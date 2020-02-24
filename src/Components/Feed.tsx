@@ -1,26 +1,26 @@
 import * as React from "react";
-// import styled from "styled-components";
+import styled from "styled-components";
 import { usePosition, useFetch } from "../CustomHooks";
 
-// const Pane = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   position: fixed;
-//   top: 0;
-//   bottom: 0;
-// `;
+const Pane = styled.div`
+  flex: 1;
+  padding: 1em;
+  background-color: rgb(222, 203, 223);
+  margin-left: 250px;
+  height: 100vh;
+`;
 
-interface IFeed {
+type Props = {
   isInfinite: boolean;
   url: string;
-}
+};
 
-export default function Feed(props: IFeed) {
+export default function Feed(props: Props) {
   React.useEffect(() => {
     console.log(props);
   }, [props]);
 
-  return <div>feed</div>;
+  return <Pane>feed</Pane>;
   // const position = usePosition(isInfinite);
   // const { data, isLoading } = useFetch(url);
 

@@ -1,44 +1,18 @@
 import * as React from "react";
 import { useForm } from "../CustomHooks";
+import { OrientationEnum, OrderEnum } from "../Constants/enums";
+import { Filters, AllOptions, SortBy } from "../Types";
 
-
-enum Orientation {
-  LANDSCAPE = "landscape",
-  PORTRAIT = "portrait",
-  SQUARISH = "squarish"
-}
-
-enum Order {
-  POPULAR = "popular",
-  LATEST = "latest",
-  OLDEST = "oldest"
-}
-
-interface IFilters {
-  collections: string[];
-  orientation: null | Orientation;
-}
-
-type SortBy = null | Order;
-
-interface IOptions {
-  isInfinite: boolean;
-  query: string;
-  sortBy: SortBy;
-  collections: string[];
-  orientation: null | Orientation;
-}
-
-interface IProps {
+type Props = {
   setInfinite: Function;
   changeUrl: Function;
-}
+};
 
-export default function Filters({ setInfinite, changeUrl }: IProps) {
+export default function Options({ setInfinite, changeUrl }: Props) {
   const [isInfinite, setIsInfinite] = React.useState(false);
   const [{ query }, changeFields] = useForm({ query: "" });
   const [sortBy, setSort] = React.useState<SortBy>(null);
-  const [filters, setFilter] = React.useState<IFilters>({
+  const [filters, setFilter] = React.useState<Filters>({
     collections: [],
     orientation: null
   });
@@ -48,7 +22,7 @@ export default function Filters({ setInfinite, changeUrl }: IProps) {
 
     if (!rawOptions) return;
 
-    const options: IOptions = JSON.parse(rawOptions);
+    const options: AllOptions = JSON.parse(rawOptions);
 
     if (options.isInfinite) {
       setIsInfinite(Boolean(options.isInfinite));
@@ -62,12 +36,12 @@ export default function Filters({ setInfinite, changeUrl }: IProps) {
       }
     }
     if (options.orientation) {
-      const typedOrientation = options.orientation as keyof typeof Orientation;
-      setFilter({ ...filters, orientation: Orientation[typedOrientation] });
+      const typedOrientation = options.orientation as keyof typeof OrientationEnum;
+      setFilter({ ...filters, orientation: OrientationEnum[typedOrientation] });
     }
     if (options.sortBy) {
-      const typedOrder = options.sortBy as keyof typeof Order;
-      setSort(Order[typedOrder]);
+      const typedOrder = options.sortBy as keyof typeof OrderEnum;
+      setSort(OrderEnum[typedOrder]);
     }
   }
 
@@ -102,7 +76,7 @@ export default function Filters({ setInfinite, changeUrl }: IProps) {
     }
 
     // changeUrl(url);
-  }, [filters, sortBy]);
+  }, [changeUrl, query, filters, sortBy]);
 
   // React.useEffect(() => {
   //   console.log('here');

@@ -1,11 +1,13 @@
 import * as React from "react";
 import { useSize } from "../CustomHooks";
 
-interface IImage {
+
+
+type Props = {
   data: {};
 }
 
-export default function ImageItem(props: IImage) {
+export default function ImageItem(props: Props) {
   const [size, ref] = useSize(props.data); // []
 
   return (

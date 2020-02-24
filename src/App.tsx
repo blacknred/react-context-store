@@ -11,6 +11,16 @@ const Layout = styled.div<{ theme?: any }>`
   background-color: ${props => props.theme.bg};
 `;
 
+function ThemedLayout(props) {
+  const [theme, setTheme] = React.useState(lightTheme);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Layout>{props.children}</Layout>
+    </ThemeProvider>
+  );
+}
+
 const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,8 +34,6 @@ interface AppState {
 }
 
 export default function App() {
-  const [theme, setTheme] = React.useState(lightTheme);
-
   const [appState, changeAppState] = React.useState<AppState>({
     isInfinite: false,
     url: ""
@@ -58,18 +66,16 @@ export default function App() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <Layout>
-        <Sidebar>
-          <Header onClick={changeTheme} />
-          <Options
-            setInfinite={handleToggle("isInfinite")}
-            changeUrl={handleChange("url")}
-          />
-        </Sidebar>
-        <Feed />
-      </Layout>
-    </ThemeProvider>
+    <ThemedLayout>
+      <Sidebar>
+        <Header isLight onClick={changeTheme} />
+        <Options
+          setInfinite={handleToggle("isInfinite")}
+          changeUrl={handleChange("url")}
+        />
+      </Sidebar>
+      <Feed />
+    </ThemedLayout>
   );
 }
 // useCallback(recalc only if changes in deps; no return(will be recalc errtime)) :

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-export default function usePosition() {
-  const [position, setPosition] = useState(null);
+export default function useMousePosition() {
+  const [position, setPosition] = useState({});
 
   useEffect(() => {
     function onMouseMove(e: any) {
-      setPosition(e.clientX);
+      setPosition({ x: e.clientX, y: e.clientY });
     }
 
     window.addEventListener("mousemove", onMouseMove);

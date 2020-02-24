@@ -10,7 +10,7 @@ const Pane = styled.div`
   max-width: 50rem;
   box-shadow: rgba(0, 0, 0, 0.12) 0.3125rem 0.3125rem 0.9375rem;
   border-radius: 0.5rem;
-  margin-top: 2%;
+  margin-top: 2%5;
 `;
 
 type Props = {

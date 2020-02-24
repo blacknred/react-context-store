@@ -8,11 +8,21 @@ const HeaderContainer = styled.div<{ primary?: boolean }>`
   color: ${props => props.theme.color};
 `;
 
+const 
+
 type Props = {
-  onClick: any;
+  onClick: any
 };
 
 export default function Header(props: Props) {
+    const changeTheme = React.useCallback(
+    e => {
+      if (theme === lightTheme) setTheme(darkTheme);
+      else setTheme(lightTheme);
+    },
+    [theme]
+  );
+
   return (
     <HeaderContainer>
       <h2>
@@ -24,7 +34,7 @@ export default function Header(props: Props) {
           </sub>
       </h2>
 
-      <button onClick={props.onClick} />
+      <ThemeButton onClick={props.onClick}> </ThemeButton>
     </HeaderContainer>
   );
 }

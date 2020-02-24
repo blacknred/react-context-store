@@ -1,5 +1,3 @@
-import { white } from "color-name";
-
 export const lightTheme = {
   fg: "#EFEFF5",
   bg: "white",

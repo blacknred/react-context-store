@@ -1,25 +1,7 @@
 import * as React from "react";
-import styled, { ThemeProvider } from "styled-components";
-import { Header, Feed, Options } from "./Components";
-import { lightTheme, darkTheme } from "./Constants/themes";
+import styled from "styled-components";
+import { Header, Feed, Options, ThemedLayout } from "./Components";
 import "./styles.css";
-
-const Layout = styled.div<{ theme?: any }>`
-  display: flex;
-  justify-content: space-between;
-  font-family: Roboto, "Open Sans", "Helvetica Neue", sans-serif;
-  background-color: ${props => props.theme.bg};
-`;
-
-function ThemedLayout(props) {
-  const [theme, setTheme] = React.useState(lightTheme);
-
-  return (
-    <ThemeProvider theme={theme}>
-      <Layout>{props.children}</Layout>
-    </ThemeProvider>
-  );
-}
 
 const Sidebar = styled.div`
   display: flex;
@@ -57,18 +39,12 @@ export default function App() {
     };
   }
 
-  const changeTheme = React.useCallback(
-    e => {
-      if (theme === lightTheme) setTheme(darkTheme);
-      else setTheme(lightTheme);
-    },
-    [theme]
-  );
+ 
 
   return (
     <ThemedLayout>
       <Sidebar>
-        <Header isLight onClick={changeTheme} />
+        <Header />
         <Options
           setInfinite={handleToggle("isInfinite")}
           changeUrl={handleChange("url")}
@@ -81,9 +57,3 @@ export default function App() {
 // useCallback(recalc only if changes in deps; no return(will be recalc errtime)) :
 // 1.reduce updates for memoed Component(instead of lambdas)
 // 2.not pass lambdas(need for args) in map, send args in the Component instead
-
-// export const Styled = {
-//   Button,
-//   Button__Icon,
-//   Button__Text,
-// };

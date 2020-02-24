@@ -5,7 +5,7 @@ import {
   reversedBreakpoints
 } from "../Constants/breakpoints";
 
-const viewportCtx = React.createContext({});
+const breakpointCtx = React.createContext({});
 // if (typeof window === 'undefined') {
 //   global.window = {}
 // }
@@ -19,7 +19,7 @@ type Props = {
   children: any;
 };
 
-export const VieportProvider = (props: Props) => {
+export const BreakpointProvider = (props: Props) => {
   const [isPortrait, setPortrait] = React.useState(false);
   const [breakpoint, setBreakpoint] = React.useState(reversedBreakpoints.lg);
 
@@ -52,14 +52,24 @@ export const VieportProvider = (props: Props) => {
   }, []);
 
   return (
-    <viewportCtx.Provider value={{ breakpoint, isPortrait }}>
+    <breakpointCtx.Provider value={{ breakpoint, isPortrait }}>
       {props.children}
-    </viewportCtx.Provider>
+    </breakpointCtx.Provider>
   );
 };
 
-export default function useViewport() {
-  const opts = React.useContext(viewportCtx);
+export default function useBreakpoint() {
+  const opts = React.useContext(breakpointCtx);
 
   return opts;
+}
+
+export function withBreakpointProvider(WrappedComponent: any) {
+  return function(props: any) {
+    return (
+      <BreakpointProvider>
+        <WrappedComponent {...props} />
+      </BreakpointProvider>
+    );
+  };
 }

@@ -1,7 +1,7 @@
 export const breakpointMedias = {
   sm: "(max-width: 600px)",
-  md: "(max-width: 1020px)",
-  lg: "(max-width: 1600px)"
+  md: "(max-width: 1200px) and (min-width: 601px)",
+  lg: "(min-width: 1201px)"
 };
 
 export const reversedBreakpoints = {

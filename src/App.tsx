@@ -1,7 +1,15 @@
 import * as React from "react";
-import styled from "styled-components";
-import { Feed, Options } from "./Components";
+import styled, { ThemeProvider } from "styled-components";
+import { Header, Feed, Options } from "./Components";
+import { lightTheme, darkTheme } from "./Constants/themes";
 import "./styles.css";
+
+const Layout = styled.div<{ theme?: any }>`
+  display: flex;
+  justify-content: space-between;
+  font-family: Roboto, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: ${props => props.theme.bg};
+`;
 
 const Sidebar = styled.div`
   display: flex;
@@ -11,16 +19,13 @@ const Sidebar = styled.div`
   bottom: 0;
 `;
 
-const Header = styled.div<{ primary?: boolean }>`
-  margin-bottom: 5rem;
-  color: ${props => (props.primary ? "white" : "palevioletred")};
-`;
-
 interface AppState {
   [name: string]: boolean | string;
 }
 
 export default function App() {
+  const [theme, setTheme] = React.useState(lightTheme);
+
   const [appState, changeAppState] = React.useState<AppState>({
     isInfinite: false,
     url: ""
@@ -44,26 +49,32 @@ export default function App() {
     };
   }
 
+  const changeTheme = React.useCallback(
+    e => {
+      if (theme === lightTheme) setTheme(darkTheme);
+      else setTheme(lightTheme);
+    },
+    [theme]
+  );
+
   return (
-    <div className="app">
-      <Sidebar>
-        <Header>
-          <h2>Image feed</h2>
-          <code>https://picsum.photos</code>
-        </Header>
-        <Options
-          setInfinite={handleToggle("isInfinite")}
-          changeUrl={handleChange("url")}
-        />
-      </Sidebar>
-      <Feed />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Layout>
+        <Sidebar>
+          <Header onClick={changeTheme} />
+          <Options
+            setInfinite={handleToggle("isInfinite")}
+            changeUrl={handleChange("url")}
+          />
+        </Sidebar>
+        <Feed />
+      </Layout>
+    </ThemeProvider>
   );
 }
 // useCallback(recalc only if changes in deps; no return(will be recalc errtime)) :
 // 1.reduce updates for memoed Component(instead of lambdas)
 // 2.not pass lambdas(need for args) in map, send args in the Component instead
-
 
 // export const Styled = {
 //   Button,

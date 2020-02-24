@@ -4,10 +4,13 @@ import { usePosition, useFetch } from "../CustomHooks";
 
 const Pane = styled.div`
   flex: 1;
-  padding: 1em;
-  background-color: rgb(222, 203, 223);
-  margin-left: 250px;
-  height: 100vh;
+  background-color: ${props => props.theme.fg};
+  margin-left: 25%;
+  height: 150vh;
+  max-width: 50rem;
+  box-shadow: rgba(0, 0, 0, 0.12) 0.3125rem 0.3125rem 0.9375rem;
+  border-radius: 0.5rem;
+  margin-top: 2%;
 `;
 
 type Props = {
@@ -20,7 +23,7 @@ export default function Feed(props: Props) {
     console.log(props);
   }, [props]);
 
-  return <Pane>feed</Pane>;
+  return <Pane/>;
   // const position = usePosition(isInfinite);
   // const { data, isLoading } = useFetch(url);
 

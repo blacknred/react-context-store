@@ -1,5 +1,7 @@
 import * as React from "react";
 import styled, { ThemeContext } from "styled-components";
+import { Store } from "../store";
+import { useStore } from "../CustomHooks";
 
 const HeaderContainer = styled.div<{ primary?: boolean }>`
   margin-bottom: 5rem;
@@ -18,6 +20,11 @@ const ThemeButton = styled.button`
 
 export default function Header() {
   const { changeTheme } = React.useContext(ThemeContext);
+  const [state, dispatch] = useStore(Store, []);
+
+  const handleClick = React.useCallback(() => {
+    dispatch({ type: "ACTION_INCR" });
+  }, [dispatch]);
 
   return (
     <HeaderContainer>
@@ -31,6 +38,8 @@ export default function Header() {
       </h2>
 
       <ThemeButton onClick={changeTheme} />
+      <br />
+      <button onClick={handleClick}>{state.count}</button>
     </HeaderContainer>
   );
 }

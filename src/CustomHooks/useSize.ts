@@ -1,7 +1,7 @@
 import { useState, useRef, useLayoutEffect } from "react";
 
 export default function useSize(trigger: any) {
-  const ref: any = useRef();
+  const ref: any = useRef<object>({});
   const [rect, setRect] = useState({});
 
   useLayoutEffect(() => {

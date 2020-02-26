@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import { Header, Feed, Options, ThemedLayout } from "./Components";
+import { Provider } from "./store";
 import "./styles.css";
 
 const Sidebar = styled.div`
@@ -39,19 +40,19 @@ export default function App() {
     };
   }
 
- 
-
   return (
-    <ThemedLayout>
-      <Sidebar>
-        <Header />
-        <Options
-          setInfinite={handleToggle("isInfinite")}
-          changeUrl={handleChange("url")}
-        />
-      </Sidebar>
-      <Feed />
-    </ThemedLayout>
+    <Provider>
+      <ThemedLayout>
+        <Sidebar>
+          <Header />
+          <Options
+            setInfinite={handleToggle("isInfinite")}
+            changeUrl={handleChange("url")}
+          />
+        </Sidebar>
+        <Feed />
+      </ThemedLayout>
+    </Provider>
   );
 }
 // useCallback(recalc only if changes in deps; no return(will be recalc errtime)) :

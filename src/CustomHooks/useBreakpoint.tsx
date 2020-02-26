@@ -1,11 +1,11 @@
-import * as React from "react";
+import React, { useContext, createContext, useEffect, useState } from "react";
 import {
   portraitMedia,
   breakpointMedias,
   reversedBreakpoints
 } from "../Constants/breakpoints";
 
-const breakpointCtx = React.createContext({});
+const breakpointCtx = createContext({});
 // if (typeof window === 'undefined') {
 //   global.window = {}
 // }
@@ -19,11 +19,11 @@ type Props = {
   children: any;
 };
 
-export const BreakpointProvider = (props: Props) => {
-  const [isPortrait, setPortrait] = React.useState(false);
-  const [breakpoint, setBreakpoint] = React.useState(reversedBreakpoints.lg);
+const BreakpointProvider = (props: Props) => {
+  const [isPortrait, setPortrait] = useState(false);
+  const [breakpoint, setBreakpoint] = useState(reversedBreakpoints.lg);
 
-  React.useEffect(() => {
+  useEffect(() => {
     function onResize(q: any) {
       if (q.matches) {
         setBreakpoint(reversedBreakpoints[q.media]);
@@ -58,13 +58,13 @@ export const BreakpointProvider = (props: Props) => {
   );
 };
 
-export default function useBreakpoint() {
-  const opts = React.useContext(breakpointCtx);
+function useBreakpoint() {
+  const opts = useContext(breakpointCtx);
 
   return opts;
 }
 
-export function withBreakpointProvider(WrappedComponent: any) {
+function withBreakpointProvider(WrappedComponent: any) {
   return function(props: any) {
     return (
       <BreakpointProvider>
@@ -73,3 +73,6 @@ export function withBreakpointProvider(WrappedComponent: any) {
     );
   };
 }
+
+export { BreakpointProvider, withBreakpointProvider };
+export default useBreakpoint;

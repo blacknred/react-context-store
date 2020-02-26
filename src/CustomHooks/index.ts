@@ -6,6 +6,7 @@ import useBreakpoint, {
   BreakpointProvider,
   withBreakpointProvider
 } from "./useBreakpoint";
+import useStore, { storeFactory } from "./useStore";
 
 export {
   useForm,
@@ -14,5 +15,7 @@ export {
   useSize,
   useBreakpoint,
   BreakpointProvider,
-  withBreakpointProvider
+  withBreakpointProvider,
+  useStore,
+  storeFactory
 };

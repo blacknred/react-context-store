@@ -20,7 +20,7 @@ type Props = {
 
 export default function Feed(props: Props) {
   React.useEffect(() => {
-    console.log(props);
+    // console.log(props);
   }, [props]);
 
   return <Pane/>;

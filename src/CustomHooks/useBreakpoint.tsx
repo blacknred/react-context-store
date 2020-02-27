@@ -1,4 +1,5 @@
-import React, { useContext, createContext, useEffect, useState } from "react";
+import * as React from "react";
+import { useContext, createContext, useEffect, useState } from "react";
 import {
   portraitMedia,
   breakpointMedias,
@@ -6,9 +7,11 @@ import {
 } from "../Constants/breakpoints";
 
 const breakpointCtx = createContext({});
-// if (typeof window === 'undefined') {
-//   global.window = {}
-// }
+
+declare const global: any;
+if (typeof window === "undefined") {
+  global.window = {};
+}
 
 const smMatch = window.matchMedia(breakpointMedias.sm);
 const mdMatch = window.matchMedia(breakpointMedias.md);

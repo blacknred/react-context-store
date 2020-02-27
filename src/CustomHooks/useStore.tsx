@@ -1,69 +1,48 @@
-import React, {
+import {
+  useMemo,
   useState,
   useEffect,
   useContext,
   useReducer,
-  createContext,
-  useMemo
+  createContext
 } from "react";
+import * as React from "react";
 import isEqual from "react-fast-compare";
-
-// Usage
-// import React from "react";
-// import { store, reducer } from "./store";
-// import { useStore } from "./hooks";
-
-// const [Store, Provider] = storeFactory(store, reducer);
-
-// function Component(props) {
-//   const [state, dispatch] = useStore(Store);
-
-//   const handleClick = React.useCallback(() => {
-//     dispatch({ type: "ACTION_ONE" });
-//   }, [dispatch]);
-
-//   return <button onClick={handleClick}>dispatch smthng</button>;
-// }
 
 function storeFactory(initialState?: object, reducer?: any, logger?: boolean) {
   const Store = createContext(initialState);
 
-  let Provider;
+  function Provider({ children }: { children?: any }) {
+    let state: Object;
+    let mutator: Function;
 
-  if (!!reducer) {
-    Provider = function({ children }) {
-      const [state, dispatch] = useReducer(reducer, initialState);
-      const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
+    if (typeof reducer === undefined || reducer === null) {
+      [state, setState] = useState(initialState);
 
-      useEffect(() => {
-        if (logger) {
-          console.log(JSON.stringify(state, null, 1));
-        }
-      }, [state]);
+      mutator = function(val) {
+        setState({ ...state, ...val });
+      };
+    } else {
+      [state, mutator] = useReducer(reducer, initialState);
+    }
 
-      return <Store.Provider value={value}>{children}</Store.Provider>;
-    };
-  } else {
-    Provider = function({ children }) {
-      const [state, setState] = useState(initialState);
-      const value = useMemo(() => ({ state, setState }), [state, setState]);
+    const value = useMemo(() => ({ state, mutator }), [state, mutator]);
 
-      useEffect(() => {
-        if (logger) {
-          console.log(JSON.stringify(state, null, 1));
-        }
-      }, [state]);
-      
-      return <Store.Provider value={value}>{children}</Store.Provider>;
-    };
+    useEffect(() => {
+      if (logger) {
+        console.log(JSON.stringify(state, null, 1));
+      }
+    }, [state]);
+
+    return <Store.Provider value={value}>{children}</Store.Provider>;
   }
 
   return [Store, Provider];
 }
 
-function useStore(Ctx, deps) {
+function useStore(Ctx: Object, deps: []) {
   const [props, setProps] = useState(deps);
-  const { dispatch, state } = useContext(Ctx);
+  const { mutator, state } = useContext(Ctx);
 
   useEffect(() => {
     if (!isEqual(state, props)) {
@@ -71,7 +50,7 @@ function useStore(Ctx, deps) {
     }
   }, [state, setProps, props]);
 
-  return [props, dispatch];
+  return [props, mutator];
 }
 
 export { storeFactory };

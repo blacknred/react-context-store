@@ -12,9 +12,9 @@ const Layout = styled.div<{ theme?: any }>`
 
 export function ThemedLayout(props: any) {
   const [theme, setTheme] = React.useState(lightTheme);
-  const j = useBreakpoint();
+  // const j = useBreakpoint();
 
-  console.log(j)
+  // console.log(j)
 
   const changeTheme = React.useCallback(
     e => {

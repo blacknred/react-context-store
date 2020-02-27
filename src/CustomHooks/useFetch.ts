@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 
-interface IState {
+type IState = {
   data: null | [];
   isLoading: boolean;
 }

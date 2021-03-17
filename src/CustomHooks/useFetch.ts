@@ -1,34 +1,41 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
-type IState = {
-  data: null | [];
-  isLoading: boolean;
+export const BASE_URL = "https://picsum.photos";
+
+interface Input<T> {
+  response: T | null;
+  error: Error | null;
 }
 
-export default function useFetch(url: string) {
+export default function useFetch<T>(url: string, options?: object): Input<T> {
+  const [response, setResponse] = useState<T | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const inUse = useRef(true);
-  const [state, setState] = useState<IState>({ data: null, isLoading: false });
+
+  const fetcher = useCallback(async () => {
+    try {
+      setResponse(null);
+      const validUrl = url.includes("://") ? url : `${BASE_URL}${url}`;
+      const res = await fetch(validUrl, options);
+      const data = await res.json();
+      if (!inUse.current) return;
+      setResponse(data);
+    } catch (e) {
+      if (!inUse.current) return;
+      setError(e);
+    }
+  }, [url, options, setResponse]);
 
   useEffect(() => {
-    return () => {
+    fetcher();
+  }, [fetcher]);
+
+  useEffect(
+    () => () => {
       inUse.current = false;
-    };
-  }, []);
+    },
+    []
+  );
 
-  useEffect(() => {
-    setState({ data: null, isLoading: true });
-
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        if (inUse.current) {
-          setState({ data, isLoading: false });
-        }
-      })
-      .catch(e => {
-        setState({ data: null, isLoading: false });
-      });
-  }, [url, setState]);
-
-  return state;
+  return { response, error };
 }

@@ -35,14 +35,15 @@ export default function Options({ setInfinite, changeUrl }: Props) {
         setFilter({ ...filters, collections: options.collections });
       }
     }
-    if (options.orientation) {
-      const typedOrientation = options.orientation as keyof typeof OrientationEnum;
-      setFilter({ ...filters, orientation: OrientationEnum[typedOrientation] });
-    }
-    if (options.sortBy) {
-      const typedOrder = options.sortBy as keyof typeof OrderEnum;
-      setSort(OrderEnum[typedOrder]);
-    }
+    // if (options.orientation) {
+    //   // @ts-nocheck
+    //   const typedOrientation = (options.orientation as unknown) as keyof typeof OrientationEnum;
+    //   setFilter({ ...filters, orientation: OrientationEnum[typedOrientation] });
+    // }
+    // if (options.sortBy) {
+    //   const typedOrder = (options.sortBy as unknown) as keyof typeof OrderEnum;
+    //   setSort(OrderEnum[typedOrder]);
+    // }
   }
 
   function saveOptionsToCache() {

@@ -1,25 +1,51 @@
-import { storeFactory } from "./CustomHooks";
+import createStore, { State, Action } from "./ContextStore";
 
 const initialState = {
-  count: 0
+  title: "just a title connected to store",
+  counter: 0,
+  isInfinite: false,
+  url: ""
 };
 
-type Action = {
-  type: string;
-};
-
-function reducer(state: any, action: Action) {
+function reducer(state: State, action: Action) {
   switch (action.type) {
     case "ACTION_INCR":
-      const newState = { count: state.count + 1 };
-      return newState;
+      return {
+        ...state,
+        counter: state.counter + 1
+      };
+    case "ACTION_UPD":
+      const { title } = state;
+      return {
+        ...state,
+        title: /^[A-Z ]+$/.test(title)
+          ? title.toLowerCase()
+          : title.toUpperCase()
+      };
     default:
       return state;
   }
 }
 
-// init
+export default createStore(initialState, reducer, {
+  label: "IMAGE_FEED_STATE",
+  logger: true
+});
 
-const [Store, Provider] = storeFactory(initialState, reducer, true);
+// function handleToggle(name: string) {
+//   return function() {
+//     changeAppState({
+//       ...appState,
+//       [name]: !appState[name]
+//     });
+//   };
+// }
 
-export { Store, Provider };
+// function handleChange(name: string) {
+//   return function(val: string) {
+//     changeAppState({
+//       ...appState,
+//       [name]: val
+//     });
+//   };
+// }

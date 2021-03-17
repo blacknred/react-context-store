@@ -14,8 +14,8 @@ const Pane = styled.div`
 `;
 
 type Props = {
-  isInfinite: boolean;
-  url: string;
+  isInfinite?: boolean;
+  url?: string;
 };
 
 export default function Feed(props: Props) {

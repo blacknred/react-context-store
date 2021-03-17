@@ -1,9 +1,9 @@
-import * as React from "react";
+import React, { useCallback, useContext } from "react";
 import styled, { ThemeContext } from "styled-components";
 import { Store } from "../store";
 import { useStore } from "../CustomHooks";
 
-const HeaderContainer = styled.div<{ primary?: boolean }>`
+const HeaderContainer = styled.div<{ primary: boolean }>`
   margin-bottom: 5rem;
   padding: 5% 10%;
   text-decoration: none;
@@ -19,15 +19,15 @@ const ThemeButton = styled.button`
 `;
 
 export default function Header() {
-  const { changeTheme } = React.useContext(ThemeContext);
+  const { changeTheme } = useContext(ThemeContext);
   const [state, dispatch] = useStore(Store, []);
 
-  const handleClick = React.useCallback(() => {
+  const handleClick = useCallback(() => {
     dispatch({ type: "ACTION_INCR" });
   }, [dispatch]);
 
   return (
-    <HeaderContainer>
+    <HeaderContainer primary>
       <h2>
         <div>image Feed</div>
         <sub>

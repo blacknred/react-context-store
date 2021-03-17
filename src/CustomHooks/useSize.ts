@@ -1,14 +1,19 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+
+type Size = {
+  width: number,
+  height: number
+}
 
 export default function useSize(trigger: any) {
-  const ref: any = useRef<object>({});
-  const [rect, setRect] = useState({});
+  const ref: any = useRef<any>();
+  const [rect, setRect] = useState<Size>();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const size = ref.current.getBoundingClientRect();
 
     setRect(size);
-  }, [trigger, ref, setRect]);
+  }, [trigger, setRect]);
 
   return [rect, ref];
 }

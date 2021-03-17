@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 
+type Position = {
+  x: number,
+  y: number
+}
+
 export default function useMousePosition() {
-  const [position, setPosition] = useState({});
+  const [position, setPosition] = useState<Position>();
 
   useEffect(() => {
-    function onMouseMove(e: any) {
+    function onMouseMove(e: MouseEvent) {
       setPosition({ x: e.clientX, y: e.clientY });
     }
 

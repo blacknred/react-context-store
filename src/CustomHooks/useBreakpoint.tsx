@@ -1,35 +1,38 @@
-import * as React from "react";
-import { useContext, createContext, useEffect, useState } from "react";
-import {
-  portraitMedia,
-  breakpointMedias,
-  reversedBreakpoints
-} from "../Constants/breakpoints";
-
-const breakpointCtx = createContext({});
+import { FC, Props, useContext, createContext, useEffect, useState } from "react";
 
 declare const global: any;
 if (typeof window === "undefined") {
   global.window = {};
 }
 
-const smMatch = window.matchMedia(breakpointMedias.sm);
-const mdMatch = window.matchMedia(breakpointMedias.md);
-const lgMatch = window.matchMedia(breakpointMedias.lg);
-const portraitMatch = window.matchMedia(portraitMedia);
-
-type Props = {
-  children: any;
+export enum Media {
+  sm = "(max-width: 600px)",
+  md = "(max-width: 1200px) and (min-width: 601px)",
+  lg = "(min-width: 1201px)",
+  portrait = "(orientation: portrait)"
 };
 
-const BreakpointProvider = (props: Props) => {
-  const [isPortrait, setPortrait] = useState(false);
-  const [breakpoint, setBreakpoint] = useState(reversedBreakpoints.lg);
+export type BreakpointCtx = {
+  breakpoint: keyof typeof Media,
+  isPortrait: boolean
+}
+
+const breakpointCtx = createContext<BreakpointCtx>({} as BreakpointCtx);
+
+const BreakpointProvider: FC = ({ children }) => {
+  const [isPortrait, setPortrait] = useState<boolean>(false);
+  const [breakpoint, setBreakpoint] = useState<keyof typeof Media>('lg');
 
   useEffect(() => {
-    function onResize(q: any) {
-      if (q.matches) {
-        setBreakpoint(reversedBreakpoints[q.media]);
+    const smMatch = window.matchMedia(Media.sm);
+    const mdMatch = window.matchMedia(Media.md);
+    const lgMatch = window.matchMedia(Media.lg);
+    const portraitMatch = window.matchMedia(Media.portrait);
+
+    function onResize(ev: MediaQueryListEvent) {
+      if (ev.matches) {
+        const r: keyof typeof Media = Media[ev.media];
+        setBreakpoint(r);
       }
     }
 
@@ -56,7 +59,7 @@ const BreakpointProvider = (props: Props) => {
 
   return (
     <breakpointCtx.Provider value={{ breakpoint, isPortrait }}>
-      {props.children}
+      {children}
     </breakpointCtx.Provider>
   );
 };
@@ -67,8 +70,8 @@ function useBreakpoint() {
   return opts;
 }
 
-function withBreakpointProvider(WrappedComponent: any) {
-  return function(props: any) {
+function withBreakpointProvider(WrappedComponent: FC) {
+  return function (props: Props<any>) {
     return (
       <BreakpointProvider>
         <WrappedComponent {...props} />
@@ -78,4 +81,5 @@ function withBreakpointProvider(WrappedComponent: any) {
 }
 
 export { BreakpointProvider, withBreakpointProvider };
+
 export default useBreakpoint;

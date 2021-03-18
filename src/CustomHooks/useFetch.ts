@@ -39,3 +39,33 @@ export default function useFetch<T>(url: string, options?: object): Input<T> {
 
   return { response, error };
 }
+
+
+// 1 random
+// https://picsum.photos/200/300[.jpg,.webp]?grayscale&blur=2
+// 1 cached random
+// https://picsum.photos/seed/{seed}/200/300?grayscale&blur=2
+// 1 static
+// https://picsum.photos/id/237/200/300
+// list
+// https://picsum.photos/v2/list?page=2&limit=100
+// [
+//   {
+//       "id": "0",
+//       "author": "Alejandro Escamilla",
+//       "width": 5616,
+//       "height": 3744,
+//       "url": "https://unsplash.com/...",
+//       "download_url": "https://picsum.photos/..."
+//   }
+// ]
+
+
+// theme
+// --------
+// random|saved
+// --------
+// colls(select)
+// width/height(inputs)
+// grayscale(check)
+// blur(slider)

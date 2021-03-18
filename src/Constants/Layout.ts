@@ -1,15 +1,15 @@
 export const COLORS = {
   light: {
-    text: "#000",
+    text: "#111",
     background: "#fff",
     tint: "#FC6D3F",
-    disabled: "#f6f6f6"
+    disabled: "hsl(210, 14.3%, 93.3%)"
   },
   dark: {
-    text: "#fff",
-    background: "#000",
+    text: "hsl(210, 14.3%, 93.3%)",
+    background: "#222",
     tint: "#FC6D3F",
-    disabled: "#222"
+    disabled: "hsl(0deg 0% 29%)"
   }
 };
 
@@ -22,57 +22,46 @@ export const SIZES = {
 
 export const FONTS = {
   largeTitle: {
-    // fontFamily: "Roboto-regular",
+    fontFamily: "Open Sans",
     fontSize: 50,
     lineHeight: 55
   },
   h1: {
-    // fontFamily: "Roboto-Black",
+    fontFamily: "Open Sans",
     fontWeight: "700",
     fontSize: 30,
     lineHeight: 36
   },
   h2: {
-    // fontFamily: "Roboto-Bold",
+    fontFamily: "Open Sans",
     fontWeight: "700",
     fontSize: 22,
     lineHeight: 30
   },
   h3: {
-    // fontFamily: "Roboto-Bold",
+    fontFamily: "Open Sans",
     fontWeight: "700",
     fontSize: 20,
     lineHeight: 22
   },
   h4: {
-    // fontFamily: "Roboto-Bold",
+    fontFamily: "Open Sans",
     fontWeight: "700",
     fontSize: 18,
     lineHeight: 22
   },
   body1: {
-    // fontFamily: "Roboto-Regular",
-    fontSize: 30,
-    lineHeight: 36
+    fontFamily: "sans-serif",
+    fontSize: 20,
+    lineHeight: 22
   },
   body2: {
-    // fontFamily: "Roboto-Regular",
-    fontSize: 20,
-    lineHeight: 30
-  },
-  body3: {
-    // fontFamily: "Roboto-Regular",
+    fontFamily: "sans-serif",
     fontSize: 16,
     lineHeight: 22
   },
-  body4: {
-    // fontFamily: "Roboto-Regular",
-    fontSize: 14,
-    lineHeight: 22,
-    fontWeight: "700"
-  },
-  body5: {
-    // fontFamily: "Roboto-Regular",
+  body3: {
+    fontFamily: "sans-serif",
     fontSize: 12,
     lineHeight: 22
   }

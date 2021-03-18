@@ -1,14 +1,9 @@
-import { useRef, useEffect, useLayoutEffect } from "react";
+import { useRef, useEffect } from "react";
 import { State, IOpts } from "./types";
+import { persister } from "./helpers";
 
-export function useMiddleware(state: State, opts?: IOpts) {
+export function useMiddleware(state: State, opts: IOpts) {
   const snapshot = useRef<State>();
-
-  useLayoutEffect(() => {
-    if (opts?.storage) {
-      console.log("try to load state from localStorage");
-    }
-  }, [opts]);
 
   useEffect(() => {
     if (!snapshot.current) {
@@ -16,28 +11,21 @@ export function useMiddleware(state: State, opts?: IOpts) {
       return;
     }
 
-    const time = new Date().toLocaleTimeString();
-    const label = `[${opts?.label || "_STORE_"} @ ${time}]`;
+    const timeLabel = `[${opts.label} @ ${new Date().toLocaleTimeString()}]`;
 
-    if (opts?.logger) {
+    if (opts.logger) {
       if (typeof opts.logger === "function") {
         opts.logger(state, snapshot.current);
       } else {
-        if (opts?.extendLogger) console.group(label);
-        else console.groupCollapsed(label);
+        if (opts.extendLogger) console.group(timeLabel);
+        else console.groupCollapsed(timeLabel);
         console.log("prev:", snapshot.current);
         console.log("next:", state);
         console.groupEnd();
       }
     }
 
-    if (opts?.storage) {
-      if (typeof opts.storage === "function") {
-        opts.storage(state, label);
-      } else {
-        window.localStorage.setItem(label, JSON.stringify(state));
-      }
-    }
+    if (opts.persistance) persister(opts, state);
 
     snapshot.current = state;
   }, [opts, state]);

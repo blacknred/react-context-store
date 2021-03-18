@@ -1,7 +1,7 @@
 import { Context, Dispatch as D } from "react";
 
 export type State = {
-  [key: string]: any;
+  readonly [key: string]: any;
 };
 
 export type Action = {
@@ -30,8 +30,8 @@ export interface ContextMap {
 }
 
 export interface IOpts {
-  label?: string | number;
-  logger?: ((next: State, prev?: State) => void) | boolean;
-  extendLogger?: boolean;
-  storage?: ((next: State, label?: string) => void) | boolean;
+  label?: string;
+  readonly logger?: boolean | ((next: State, prev?: State) => void);
+  readonly extendLogger?: boolean;
+  readonly persistance?: boolean | ((label: string, next?: State) => State | void);
 }

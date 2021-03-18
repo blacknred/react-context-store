@@ -1,6 +1,5 @@
-import { createStore } from "./helpers";
+import { createStore } from "./store";
 
 export default createStore;
-export * from "./helpers";
+export * from "./store";
 export * from "./types";
-export * from "./hooks";

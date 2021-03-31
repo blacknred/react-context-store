@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useForm } from "../CustomHooks";
-import { OrientationEnum, OrderEnum } from "../Constants/enums";
+import { useForm } from "../hooks";
+import { OrientationEnum, OrderEnum } from "../constants/enums";
 import { Filters, AllOptions, SortBy } from "../Types";
 
 type Props = {

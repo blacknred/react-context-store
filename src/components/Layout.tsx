@@ -1,7 +1,7 @@
 import { useState, FC } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { withBreakpointProvider, useBreakpoint } from "../CustomHooks";
-import { COLORS } from "../Constants";
+import { withBreakpointProvider, useBreakpoint } from "../hooks";
+import { COLORS } from "../constants";
 import { Color } from '../types';
 
 const Layout = styled.div<{ theme: Color }>`

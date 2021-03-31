@@ -1,4 +1,4 @@
-import createStore, { State, Action } from "./ContextStore";
+import createStore, { State, Action } from "../core";
 
 const initialState = {
   title: "just a title connected to store",

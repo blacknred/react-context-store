@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import styled, { ThemeContext } from "styled-components";
 import { Store } from "../store";
-import { useStore } from "../CustomHooks";
+import { useStore } from "../hooks";
 
 const HeaderContainer = styled.div<{ primary: boolean }>`
   margin-bottom: 5rem;

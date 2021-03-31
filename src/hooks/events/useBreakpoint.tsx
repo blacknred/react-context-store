@@ -65,9 +65,7 @@ const BreakpointProvider: FC = ({ children }) => {
 };
 
 function useBreakpoint() {
-  const opts = useContext(breakpointCtx);
-
-  return opts;
+  return useContext(breakpointCtx);
 }
 
 function withBreakpointProvider(WrappedComponent: FC) {

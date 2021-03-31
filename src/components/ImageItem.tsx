@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { useSize } from "../CustomHooks";
+import { useSize } from "../hooks";
 
 export const Image = styled.image<{ src: string }>`
   max-width: '100%;

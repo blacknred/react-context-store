@@ -14,7 +14,7 @@ import { useMiddleware } from './hooks';
 import { State, Reducer, MapContext, SelectorMap, ContextMap, IOpts } from './types';
 
 export const createContextConnector = (Ctx: Context<any>) => (
-  Component: FC,
+  Component: FC<any>,
   selectors?: SelectorMap
 ) => (props: Props<any>): ReactElement => {
   const { state, dispatch } = useContext(Ctx);
